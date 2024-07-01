@@ -9,6 +9,8 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Enlace a CSS personalizado -->
     <link href="styles.css" rel="stylesheet">
+    <!-- Enlace a SweetAlert CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
 </head>
 
 <body class="bg-light">
@@ -19,15 +21,15 @@
                 <div class="card mt-5">
                     <div class="card-body">
                         <h3 class="card-title text-center">Iniciar Sesión</h3>
-                        <form action="login.php" method="POST">
+                        <form id="loginForm">
                             <div class="form-group">
-                                <label for="email">Correo electrónico</label>
-                                <input type="email" class="form-control" id="email" name="email"
-                                    placeholder="Introduce tu correo electrónico" required>
+                                <label for="user">Nombre de usuario</label>
+                                <input type="text" class="form-control" id="user"
+                                    placeholder="Introduce tu nombre de usuario" required>
                             </div>
                             <div class="form-group">
                                 <label for="password">Contraseña</label>
-                                <input type="password" class="form-control" id="password" name="password"
+                                <input type="password" class="form-control" id="password"
                                     placeholder="Introduce tu contraseña" required>
                             </div>
                             <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
@@ -48,6 +50,55 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Enlace a SweetAlert JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
+
+    <!-- JavaScript personalizado -->
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const form = document.getElementById('loginForm');
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                // Declarar variables para capturar los datos del formulario
+                const user = document.getElementById('user').value;
+                const password = document.getElementById('password').value;
+
+                // Definir las credenciales correctas
+                const credentials = {
+                    'bernardo': '12345',
+                    'ingreyeslara': 'utd_2024',
+                };
+
+                if (user === '' || password === '') {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Campos vacíos',
+                        text: 'Por favor, complete todos los campos.',
+                    });
+                } else if (!credentials[user] || credentials[user] !== password) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Credenciales incorrectas',
+                        text: 'Credenciales incorrectas. Por favor, inténtelo de nuevo.',
+                    });
+                } else {
+                    // Mostrar un mensaje de éxito
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Inicio de sesión exitoso',
+                        text: 'Bienvenido ' + user + '!',
+                    }).then(() => {
+                        // Reiniciar el formulario
+                        form.reset();
+                        // Redireccionar a la URL especificada
+                        window.location.href = 'https://bernardo.projectsutd.online/parcial1/';
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
